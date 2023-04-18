@@ -1,34 +1,35 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class Person {
+    public static LocalDate currentDay = LocalDate.now();
     protected String name;
-    protected int age;
-    protected Date born;
+    protected LocalDate born;
     protected int id;
+    protected int age;
 
     Scanner sc = new Scanner(System.in);
-    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
-    public Person(String name, int age, Date born, int id) {
+    public Person(String name, LocalDate born, int id) {
         this.name = name;
-        this.age = age;
         this.born = born;
         this.id = id;
+        Period period = Period.between(born, currentDay);
+        this.age = period.getYears();
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBorn(LocalDate born) {
+        this.born = born;
     }
 
-    public void setBorn(Date born) {
-        this.born = born;
+    public void setAge() {
+        Period period = Period.between(born, currentDay);
+        this.age = period.getYears();
     }
 
     public void setID(int id) {
@@ -43,7 +44,7 @@ public class Person {
         return this.age;
     }
 
-    public Date getBorn() {
+    public LocalDate getBorn() {
         return this.born;
     }
 
@@ -51,22 +52,10 @@ public class Person {
         return this.id;
     }
 
-    public void changeInformation() {
-        System.out.println("Name: ");
-        String realName = sc.nextLine();
-        this.name = realName;
-        System.out.println("Age: ");
-        int realAge = sc.nextInt();
-        this.age = realAge;
-        Date realDateBorn;
-        try {
-            realDateBorn = df.parse(sc.nextLine());
-            this.born = realDateBorn;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Id: ");
-        int realID = sc.nextInt();
-        this.id = realID;
+    public void changeInformation(String name, LocalDate born, int id) {
+        setName(name);
+        setBorn(born);
+        setID(id);
+        setAge();
     }
 }

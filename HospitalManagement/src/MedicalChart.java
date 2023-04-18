@@ -1,29 +1,34 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class MedicalChart {
-    private Date dateIn;
-    private Date dateOut;
+    private LocalDate dateIn;
+    private LocalDate dateOut;
     private String illness;
     private String note;
+    int check;
 
     Scanner sc = new Scanner(System.in);
-    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
-    public MedicalChart(Date dateIn, Date dateOut, String illness, String note) {
+    public MedicalChart(LocalDate dateIn, LocalDate dateOut, String illness, String note) {
         this.dateIn = dateIn;
         this.dateOut = dateOut;
         this.illness = illness;
         this.note = note;
+        this.check = 1;
     }
 
-    public void setDateIn(Date dateIn) {
+    public MedicalChart() {
+        this.check = 0;
+    }
+
+    public void setDateIn(LocalDate dateIn) {
         this.dateIn = dateIn;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(LocalDate dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -35,11 +40,11 @@ public class MedicalChart {
         this.note = note;
     }
 
-    public Date getDateIn() {
+    public LocalDate getDateIn() {
         return this.dateIn;
     }
 
-    public Date getDateOut() {
+    public LocalDate getDateOut() {
         return this.dateOut;
     }
 
@@ -52,9 +57,13 @@ public class MedicalChart {
     }
 
     public String toString() {
-        return "Illness: " + illness + "\n" +
-                "DateIn: " + df.format(dateIn) + "\n" +
-                "DateOut: " + df.format(dateIn) + "\n" +
-                "Note: " + note;
+        if (this.check == 1) {
+            return "Illness: " + illness + "\n" +
+                    "DateIn: " + dateIn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                    "DateOut: " + dateOut.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                    "Note: " + note;
+        } else {
+            return "Not found";
+        }
     }
 }

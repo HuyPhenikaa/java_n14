@@ -1,5 +1,6 @@
-import java.util.Date;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Patient extends Person {
     private String treatmentRoom;
@@ -7,15 +8,16 @@ public class Patient extends Person {
 
     Scanner sc = new Scanner(System.in);
 
-    public Patient(String name, int age, Date born, int id, String treatmentRoom, MedicalChart mc) {
-        super(name, age, born, id);
+    public Patient(String name, LocalDate born, int id, String treatmentRoom, MedicalChart mc) {
+        super(name, born, id);
         this.treatmentRoom = treatmentRoom;
         this.mc = mc;
     }
 
-    public Patient(String name, int age, Date born, int id, String treatmentRoom) {
-        super(name, age, born, id);
+    public Patient(String name, LocalDate born, int id, String treatmentRoom) {
+        super(name, born, id);
         this.treatmentRoom = treatmentRoom;
+        this.mc = new MedicalChart();
     }
 
     public void setTreatmentRoom(String treatmentRoom) {
@@ -33,12 +35,24 @@ public class Patient extends Person {
     public String toString() {
         return "Name: " + this.name + "\n" +
                 "Age: " + this.age + "\n" +
-                "Date of brith: " + df.format(this.born) + "\n" +
+                "Date of brith: " + born.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
                 "Id: " + this.id + "\n" +
+                "Treatmentroom: " + this.treatmentRoom + "\n" +
                 "Medical Chart: \n" + mc.toString();
     }
 
-    public void changePatientMedicalChart() {
-        mc.changeMedicalChart();
+    public void changePatientMedicalChart(LocalDate dateIn, LocalDate dateOut, String illness, String note) {
+        this.mc.setDateIn(dateIn);
+        this.mc.setDateOut(dateOut);
+        this.mc.setIllness(illness);
+        this.mc.setNote(note);
+    }
+
+    public boolean check(String name, int id) {
+        if (this.name.equals(name) == true && this.id == id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

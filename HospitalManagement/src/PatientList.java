@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class PatientList {
     protected ArrayList<Patient> patientList;
@@ -17,12 +18,10 @@ public class PatientList {
     }
 
     // remove a patient from the list
-    public boolean removePatient(String name) {
+    public boolean removePatient(String name, int id) {
         for (Patient patient : patientList) {
-            if (patient.getName() == name) {
-                return patientList.remove(patient);
-            } else {
-                return false;
+            if (patient.check(name, id) == true) {
+                return this.patientList.remove(patient);
             }
         }
         return false;
@@ -40,7 +39,6 @@ public class PatientList {
 
     // find patient whith age
     public void findPatientWithAge(int age) {
-        System.out.println("Patient who " + age + " years old");
         for (Patient patient : patientList) {
             if (patient.getAge() == age) {
                 System.out.println(patient);
@@ -59,27 +57,28 @@ public class PatientList {
     }
 
     // change patient information
-    public void changeInformation(String name) {
+    public void changeInformation(String name, int id, int newID, LocalDate born) {
         for (Patient patient : patientList) {
-            if (patient.getName() == name) {
-                patient.changeInformation();
+            if (patient.check(name, id) == true) {
+                patient.changeInformation(name, born, newID);
             }
         }
     }
 
     // change medical chart
-    public void changeMedicalChart(String name) {
+    public void changeMedicalChart(String name, int id, LocalDate dateIn, LocalDate dateOut, String illness,
+            String note) {
         for (Patient patient : patientList) {
-            if (patient.getName() == name) {
-                patient.changePatientMedicalChart();
+            if (patient.check(name, id) == true) {
+                patient.changePatientMedicalChart(dateIn, dateOut, illness, note);
             }
         }
     }
 
     // add medical chart
-    public void addMedicalChart(String name, MedicalChart mc) {
+    public void addMedicalChart(String name, int id, MedicalChart mc) {
         for (Patient patient : patientList) {
-            if (patient.getName() == name) {
+            if (patient.check(name, id) == true) {
                 patient.setMedicalChart(mc);
             }
         }

@@ -1,20 +1,37 @@
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;;
 
 public class test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
-        String[] nameRoom = new String[10];
+        String nameRoom1 = "Ward 1";
+        String nameRoom2 = "Ward 2";
+        String nameRoom3 = "Ward 3";
+        String nameRoom4 = "Ward 4";
+        String nameRoom5 = "Ward 5";
+        String nameRoom6 = "Ward 6";
+        String nameRoom7 = "Ward 7";
+        String nameRoom8 = "Ward 8";
+        String nameRoom9 = "Ward 9";
+        String nameRoom10 = "Ward 10";
+        ArrayList<String> room = new ArrayList<String>();
+        room.add(nameRoom1);
+        room.add(nameRoom2);
+        room.add(nameRoom3);
+        room.add(nameRoom4);
+        room.add(nameRoom5);
+        room.add(nameRoom6);
+        room.add(nameRoom7);
+        room.add(nameRoom8);
+        room.add(nameRoom9);
+        room.add(nameRoom10);
         TreatmentRoom[] tmr = new TreatmentRoom[10];
         for (int i = 0; i < 10; i++) {
-            nameRoom[i] = "Ward " + Integer.toString(i);
-            tmr[i].setName(nameRoom[i]);
+            tmr[i] = new TreatmentRoom(room.get(i));
         }
-
         int choose;
         do {
             System.out.println("Menu------------------------");
@@ -51,19 +68,14 @@ public class test {
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
                         System.out.println("Enter name: ");
+                        sc.nextLine();
                         String name = sc.nextLine();
-                        System.out.println("Enter age: ");
-                        int age = sc.nextInt();
-                        System.out.println("Enter date of birth: ");
-                        try {
-                            Date born = df.parse(sc.nextLine());
-                            System.out.println("Enter ID: ");
-                            int id = sc.nextInt();
-                            Patient pa = new Patient(name, age, born, id, nameRoom[choose3 - 1]);
-                            tmr[choose3 - 1].addPatient(pa);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        System.out.println("Enter date of birth(yyyy-MM-dd): ");
+                        LocalDate birthDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+                        System.out.println("Enter ID: ");
+                        int id = sc.nextInt();
+                        Patient pa = new Patient(name, birthDate, id, room.get(choose3 - 1));
+                        tmr[choose3 - 1].addPatient(pa);
                     } else if (choose2 == 2) {
                         int choose3;
                         System.out.println("Remove a patient from: \n" +
@@ -79,8 +91,15 @@ public class test {
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
                         System.out.println("Enter name patient: ");
+                        sc.nextLine();
                         String name = sc.nextLine();
-                        tmr[choose3 - 1].removePatient(name);
+                        System.out.println("Enter ID: ");
+                        int id = sc.nextInt();
+                        if (tmr[choose3 - 1].removePatient(name, id) == true) {
+                            System.out.println("Done");
+                        } else {
+                            System.out.println("Can't not find patient");
+                        }
                     } else if (choose2 == 3) {
                         int choose3;
                         System.out.println("Edit a patient in: \n" +
@@ -96,8 +115,16 @@ public class test {
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
                         System.out.println("Enter name patient: ");
+                        sc.nextLine();
                         String name = sc.nextLine();
-                        tmr[choose3 - 1].changeInformation(name);
+                        System.out.println("Enter ID: ");
+                        int id = sc.nextInt();
+                        System.out.println("Enter new ID: ");
+                        int newID = sc.nextInt();
+                        System.out.println("Enter date of birth(yyyy-MM-dd) :");
+                        sc.nextLine();
+                        LocalDate birthDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+                        tmr[choose3 - 1].changeInformation(name, id, newID, birthDate);
                     } else if (choose2 == 4) {
                         System.out.println("PatientList: ");
                         for (int i = 0; i < 10; i++) {
@@ -124,7 +151,7 @@ public class test {
                                 "9. Ward number 9\n" +
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
-                        tmr[choose3 - 1].findPatientWithTreatmentRoom(nameRoom[choose3 - 1]);
+                        tmr[choose3 - 1].findPatientWithTreatmentRoom(room.get(choose3 - 1));
                     } else if (choose2 > 6) {
                         System.out.println("Error");
                         continue;
@@ -154,30 +181,51 @@ public class test {
                                         "Treatment room menu:\n" +
                                                 "0. Out\n" +
                                                 "1. Add medical charts\n" +
-                                                "2. Change medical charts\n");
+                                                "2. Change medical charts\n" +
+                                                "3. Show list information of patient");
                                 choose3 = sc.nextInt();
                                 if (choose3 == 1) {
                                     System.out.println("Enter patient name: ");
+                                    sc.nextLine();
                                     String name = sc.nextLine();
-                                    System.out.println("Enter Date in: ");
-                                    Date dateIn;
-                                    try {
-                                        dateIn = df.parse(sc.nextLine());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    System.out.println("Enter date out: ");
-                                    Date dateOut;
-                                    try {
-                                        dateOut = df.parse(sc.nextLine());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
+                                    System.out.println("Enter ID: ");
+                                    int id = sc.nextInt();
+                                    System.out.println("Enter date in(yyyy-MM-dd): ");
+                                    sc.nextLine();
+                                    LocalDate dateIn = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+                                    System.out.println("Enter date out(yyyy-MM-dd): ");
+                                    LocalDate dateOut = LocalDate.parse(sc.nextLine(),
+                                            DateTimeFormatter.ISO_LOCAL_DATE);
                                     System.out.println("Enter name of illness: ");
                                     String illness = sc.nextLine();
                                     System.out.println("Enter note: ");
                                     String note = sc.nextLine();
                                     MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
+                                    tmr[choose2 - 1].addMedicalChart(name, id, mc);
+                                } else if (choose3 == 2) {
+                                    System.out.println("Enter patient name: ");
+                                    sc.nextLine();
+                                    String name = sc.nextLine();
+                                    System.out.println("Enter ID: ");
+                                    int id = sc.nextInt();
+                                    System.out.println("Enter information of medical charts:");
+                                    System.out.println("Enter Date in(yyyy-MM-dd): ");
+                                    sc.nextLine();
+                                    LocalDate dateIn = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+                                    System.out.println("Enter Date out(yyyy-MM-dd): ");
+                                    LocalDate dateOut = LocalDate.parse(sc.nextLine(),
+                                            DateTimeFormatter.ISO_LOCAL_DATE);
+                                    System.out.println("Enter name of illness: ");
+                                    String illness = sc.nextLine();
+                                    System.out.println("Enter note: ");
+                                    String note = sc.nextLine();
+                                    tmr[choose2 - 1].changeMedicalChart(name, id, dateIn, dateOut, illness, note);
+                                } else if (choose3 == 3) {
+                                    System.out.println("Patient in " + room.get(choose2 - 1));
+                                    tmr[choose2 - 1].showList();
+                                } else if (choose3 > 3) {
+                                    System.out.println("Error");
+                                    continue;
                                 }
                             } while (choose3 != 0);
                         }
