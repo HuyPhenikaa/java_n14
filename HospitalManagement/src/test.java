@@ -127,9 +127,11 @@ public class test {
                         tmr[choose3 - 1].changeInformation(name, id, newID, birthDate);
                     } else if (choose2 == 4) {
                         System.out.println("PatientList: ");
-                        for (int i = 0; i < 10; i++) {
-                            tmr[i].showList();
-                        }
+                        Write write = new Write();
+                        write.WriteToBinary(tmr);
+                        // for (int i = 0; i < 10; i++) {
+                        //     tmr[i].showList();
+                        // }
                     } else if (choose2 == 5) {
                         System.out.println("Enter age: ");
                         int age = sc.nextInt();
