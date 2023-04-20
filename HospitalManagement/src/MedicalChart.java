@@ -56,6 +56,30 @@ public class MedicalChart {
         return this.note;
     }
 
+    public int getDayOfIn() {
+        return this.dateIn.getDayOfMonth();
+    }
+
+    public int getMonthOfIn() {
+        return (int) this.dateIn.getMonthValue();
+    }
+
+    public int getYearOfIn() {
+        return this.dateIn.getYear();
+    }
+
+    public int getDayOfOut() {
+        return this.dateOut.getDayOfMonth();
+    }
+
+    public int getMonthOfOut() {
+        return this.dateOut.getMonthValue();
+    }
+
+    public int getYearOfOut() {
+        return this.dateOut.getYear();
+    }
+
     public String toString() {
         if (this.check == 1) {
             return "Illness: " + illness + "\n" +
