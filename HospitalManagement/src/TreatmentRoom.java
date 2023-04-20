@@ -18,6 +18,12 @@ public class TreatmentRoom extends PatientList {
         return this.name;
     }
 
+    public void printNamePatient() {
+        for (Patient patient : patientList) {
+            System.out.println(patient.getName());
+        }
+    }
+
     public void showList() {
         System.out.println("Treatment room: " + getName());
         super.showList();
