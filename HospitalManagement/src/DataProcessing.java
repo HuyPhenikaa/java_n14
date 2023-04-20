@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class DataProcessing {
+    // in
     public static void showInfo(ResultSet rs) {
         try {
             while(rs.next()) {
@@ -18,6 +19,7 @@ public class DataProcessing {
         }
     }
 
+    // kiem tra xem id co ton tai chua
     public static boolean isPatientExist(int id) {
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
@@ -40,7 +42,8 @@ public class DataProcessing {
         return false;
     }
 
-    public static void addPatient(int id, String name, int age, int dayborn, int monthborn, int yearborn) {
+    // them benh nhan
+    public static void addPatientToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn) {
         if(isPatientExist(id)) {
             var url = "jdbc:mysql://localhost:3306/mydatabase";
             var user = "root";
@@ -69,11 +72,29 @@ public class DataProcessing {
         }
     }
 
-    public static void removePatient(int id, String name) {
+    // xoa benh nhan theo id
+    public static void removePatientFromDB(int idToDelete) {
+        var url = "jdbc:mysql://localhost:3306/mydatabase";
+        var user = "root";
+        var password = "";
+        try(Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement statement = null;
+            String sql = "DELETE FROM patient_data WHERE id = ?";
+            statement = connection.prepareStatement(sql);
 
+            statement.setInt(1, idToDelete);
+            statement.addBatch();
+
+            statement.executeBatch();
+
+            connection.close();
+            } catch(Exception e) {
+                System.out.println("Loi xoa");
+            }
+        
     }
     public static void main(String[] args) {
-        addPatient(6, "Day la id 6", 0, 0, 0, 0);
-         
+        // addPatient(6, "Day la id 6", 0, 0, 0, 0);
+        // removePatient(6);
     }
 }

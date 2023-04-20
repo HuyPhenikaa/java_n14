@@ -3,8 +3,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.sql.*;
-import java.util.logging.*;
+import java.sql.*;;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -102,16 +101,17 @@ public class App {
                                 "9. Ward number 9\n" +
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
-                        System.out.println("Enter name patient: ");
-                        sc.nextLine();
+                        // System.out.println("Enter name patient: ");
+                        // sc.nextLine();
                         String name = sc.nextLine();
                         System.out.println("Enter ID: ");
                         int id = sc.nextInt();
-                        if (tmr[choose3 - 1].removePatient(name, id) == true) {
-                            System.out.println("Done");
-                        } else {
-                            System.out.println("Can't not find patient");
-                        }
+                        DataProcessing.removePatientFromDB(id);
+                        // if (tmr[choose3 - 1].removePatient(name, id) == true) {
+                        //     System.out.println("Done");
+                        // } else {
+                        //     System.out.println("Can't not find patient");
+                        // }
                     } else if (choose2 == 3) {
                         int choose3;
                         System.out.println("Edit a patient in: \n" +
