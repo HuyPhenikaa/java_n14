@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 
 public class Person {
@@ -50,6 +51,18 @@ public class Person {
 
     public int getID() {
         return this.id;
+    }
+
+    public int getDayOfBirth() {
+        return this.born.getDayOfMonth();
+    }
+
+    public int getMonthOfBirth() {
+        return (int) this.born.getMonthValue();
+    }
+
+    public int getYearOfBirth() {
+        return this.born.getYear();
     }
 
     public void changeInformation(String name, LocalDate born, int id) {
