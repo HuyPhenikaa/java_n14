@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class test {
     public static void main(String[] args) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         Scanner sc = new Scanner(System.in);
 
         String nameRoom1 = "Ward 1";
@@ -70,8 +72,16 @@ public class test {
                         System.out.println("Enter name: ");
                         sc.nextLine();
                         String name = sc.nextLine();
-                        System.out.println("Enter date of birth(yyyy-MM-dd): ");
-                        LocalDate birthDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+                        LocalDate birthDate = null;
+                        while (birthDate == null) {
+                            try {
+                                System.out.println("Enter date of birth(yyyy-MM-dd): ");
+                                String input = sc.nextLine();
+                                birthDate = LocalDate.parse(input, formatter);
+                            } catch (DateTimeParseException e) {
+                                System.out.println("Invalid date format. Please try again.");
+                            }
+                        }
                         System.out.println("Enter ID: ");
                         int id = sc.nextInt();
                         Patient pa = new Patient(name, birthDate, id, room.get(choose3 - 1));
@@ -119,18 +129,13 @@ public class test {
                         String name = sc.nextLine();
                         System.out.println("Enter ID: ");
                         int id = sc.nextInt();
-                        System.out.println("Enter new ID: ");
-                        int newID = sc.nextInt();
-                        System.out.println("Enter date of birth(yyyy-MM-dd) :");
-                        sc.nextLine();
-                        LocalDate birthDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
-                        tmr[choose3 - 1].changeInformation(name, id, newID, birthDate);
+                        tmr[choose3 - 1].changeInformation(name, id);
                     } else if (choose2 == 4) {
                         System.out.println("PatientList: ");
                         Write write = new Write();
                         write.WriteToBinary(tmr);
                         // for (int i = 0; i < 10; i++) {
-                        //     tmr[i].showList();
+                        // tmr[i].showList();
                         // }
                     } else if (choose2 == 5) {
                         System.out.println("Enter age: ");
@@ -192,36 +197,14 @@ public class test {
                                     String name = sc.nextLine();
                                     System.out.println("Enter ID: ");
                                     int id = sc.nextInt();
-                                    System.out.println("Enter date in(yyyy-MM-dd): ");
-                                    sc.nextLine();
-                                    LocalDate dateIn = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
-                                    System.out.println("Enter date out(yyyy-MM-dd): ");
-                                    LocalDate dateOut = LocalDate.parse(sc.nextLine(),
-                                            DateTimeFormatter.ISO_LOCAL_DATE);
-                                    System.out.println("Enter name of illness: ");
-                                    String illness = sc.nextLine();
-                                    System.out.println("Enter note: ");
-                                    String note = sc.nextLine();
-                                    MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
-                                    tmr[choose2 - 1].addMedicalChart(name, id, mc);
+                                    tmr[choose2 - 1].addMedicalChart(name, id);
                                 } else if (choose3 == 2) {
                                     System.out.println("Enter patient name: ");
                                     sc.nextLine();
                                     String name = sc.nextLine();
                                     System.out.println("Enter ID: ");
                                     int id = sc.nextInt();
-                                    System.out.println("Enter information of medical charts:");
-                                    System.out.println("Enter Date in(yyyy-MM-dd): ");
-                                    sc.nextLine();
-                                    LocalDate dateIn = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
-                                    System.out.println("Enter Date out(yyyy-MM-dd): ");
-                                    LocalDate dateOut = LocalDate.parse(sc.nextLine(),
-                                            DateTimeFormatter.ISO_LOCAL_DATE);
-                                    System.out.println("Enter name of illness: ");
-                                    String illness = sc.nextLine();
-                                    System.out.println("Enter note: ");
-                                    String note = sc.nextLine();
-                                    tmr[choose2 - 1].changeMedicalChart(name, id, dateIn, dateOut, illness, note);
+                                    tmr[choose2 - 1].changeMedicalChart(name, id);
                                 } else if (choose3 == 3) {
                                     System.out.println("Patient in " + room.get(choose2 - 1));
                                     tmr[choose2 - 1].showList();
