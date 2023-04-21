@@ -73,7 +73,7 @@ public class MedicalChart {
     }
 
     public int getMonthOfOut() {
-        return this.dateOut.getMonthValue();
+        return (int) this.dateOut.getMonthValue();
     }
 
     public int getYearOfOut() {

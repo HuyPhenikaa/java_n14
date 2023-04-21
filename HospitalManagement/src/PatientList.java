@@ -19,19 +19,20 @@ public class PatientList {
 
     // add a patient to the list and database
     public void addPatient(Patient pa) {
-        DataProcessing.addPatientToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth());
+        DataProcessing.addPatientToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(),
+                pa.getYearOfBirth());
         this.patientList.add(pa);
     }
 
     // remove a patient from the list and database
-    public static boolean removePatient(int id) {
-        if (DataProcessing.isPatientExist(id)) {
-            // System.out.println("DA VAO");
-            DataProcessing.removePatientFromDB(id);
-            // return this.patientList.remove(patient);
-            return true;
+    public static boolean removePatient(String name, int id) {
+        for (Patient patient : patientList) {
+            if (patient.check(name, id) == true) {
+                return this.patientList.remove(patient);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     // show the patient list

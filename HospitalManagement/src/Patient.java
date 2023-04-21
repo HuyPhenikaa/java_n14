@@ -32,6 +32,38 @@ public class Patient extends Person {
         return this.treatmentRoom;
     }
 
+    public int getDayOfIn() {
+        return this.mc.getDayOfIn();
+    }
+
+    public int getMonthOfIn() {
+        return this.mc.getMonthOfIn();
+    }
+
+    public int getYearOfIn() {
+        return this.mc.getYearOfIn();
+    }
+
+    public int getDayOfOut() {
+        return this.mc.getDayOfOut();
+    }
+
+    public int getMonthOfOut() {
+        return this.mc.getMonthOfOut();
+    }
+
+    public int getYearOfOut() {
+        return this.mc.getYearOfOut();
+    }
+
+    public String getIllness() {
+        return this.mc.getIllness();
+    }
+
+    public String getNote() {
+        return this.mc.getNote();
+    }
+
     public String toString() {
         return "Name: " + this.name + "\n" +
                 "Age: " + this.age + "\n" +
