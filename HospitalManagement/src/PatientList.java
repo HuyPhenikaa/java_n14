@@ -19,8 +19,6 @@ public class PatientList {
 
     // add a patient to the list and database
     public void addPatient(Patient pa) {
-        DataProcessing.addPatientToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(),
-                pa.getYearOfBirth());
         this.patientList.add(pa);
     }
 

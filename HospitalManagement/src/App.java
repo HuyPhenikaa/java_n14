@@ -101,17 +101,16 @@ public class App {
                                 "9. Ward number 9\n" +
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
-                        // System.out.println("Enter name patient: ");
-                        // sc.nextLine();
+                        System.out.println("Enter name patient: ");
+                        sc.nextLine();
                         String name = sc.nextLine();
                         System.out.println("Enter ID: ");
                         int id = sc.nextInt();
-                        DataProcessing.removePatientFromDB(id);
-                        // if (tmr[choose3 - 1].removePatient(name, id) == true) {
-                        //     System.out.println("Done");
-                        // } else {
-                        //     System.out.println("Can't not find patient");
-                        // }
+                        if (tmr[choose3 - 1].removePatient(name, id) == true) {
+                            System.out.println("Done");
+                        } else {
+                            System.out.println("Can't not find patient");
+                        }
                     } else if (choose2 == 3) {
                         int choose3;
                         System.out.println("Edit a patient in: \n" +
@@ -127,18 +126,15 @@ public class App {
                                 "10. Ward number 10\n");
                         choose3 = sc.nextInt();
                         System.out.println("Enter name patient: ");
-                        sc.nextLine();
                         String name = sc.nextLine();
                         System.out.println("Enter ID: ");
                         int id = sc.nextInt();
                         tmr[choose3 - 1].changeInformation(name, id);
                     } else if (choose2 == 4) {
                         System.out.println("PatientList: ");
-                        Write write = new Write();
-                        write.WriteToBinary(tmr);
-                        // for (int i = 0; i < 10; i++) {
-                        // tmr[i].showList();
-                        // }
+                        for (int i = 0; i < 10; i++) {
+                        tmr[i].showList();
+                        }
                     } else if (choose2 == 5) {
                         System.out.println("Enter age: ");
                         int age = sc.nextInt();
