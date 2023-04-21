@@ -25,7 +25,7 @@ public class PatientList {
     }
 
     // remove a patient from the list and database
-    public static boolean removePatient(String name, int id) {
+    public boolean removePatient(String name, int id) {
         for (Patient patient : patientList) {
             if (patient.check(name, id) == true) {
                 return this.patientList.remove(patient);
@@ -33,6 +33,7 @@ public class PatientList {
                 return false;
             }
         }
+        return false;
     }
 
     // show the patient list
