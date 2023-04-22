@@ -54,10 +54,10 @@ public class App {
                 System.out.println("Add patient to: ");
                 int choose2;
                 for (int i = 0; i < 5; i++) {
-                    System.out.println((i + 1) + nameOfRoom[i]);
+                    System.out.println((i + 1) + ". " + nameOfRoom[i]);
                 }
                 choose2 = sc.nextInt();
-                Patient pa = new Patient(name, birthDate, id, nameOfRoom[choose2 + 1]);
+                Patient pa = new Patient(name, birthDate, id, nameOfRoom[choose2 - 1]);
 
                 list.addPatient(pa);
                 // up du lieu vao data
@@ -78,6 +78,7 @@ public class App {
                         LocalDate dateOut = null;
                         String illness;
                         String note;
+                        sc.nextLine();
                         if (list.check(id) == true) {
                             while (dateIn == null) {
                                 try {
@@ -105,6 +106,8 @@ public class App {
 
                             list.addMedicalChart(id, mc);
                             // luu vao datat dung mc.get
+                        } else {
+                            System.out.println("The patient do not exist");
                         }
                     } else if (choose2 == 2) {
                         System.out.println("List patient: ");
