@@ -58,6 +58,9 @@ public class App {
                 }
                 choose2 = sc.nextInt();
                 Patient pa = new Patient(name, birthDate, id, nameOfRoom[choose2 + 1]);
+
+                list.addPatient(pa);
+                // up du lieu vao data
             } else if (choose == 2) {
                 int choose2;
                 do {
@@ -70,7 +73,37 @@ public class App {
                     if (choose2 == 1) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
-                        list.addMedicalChart(id);
+
+                        if (list.check(id) == true) {
+                            LocalDate dateIn = null;
+                            while (dateIn == null) {
+                                try {
+                                    System.out.println("Enter date in(yyyy-MM-dd): ");
+                                    String input = sc.nextLine();
+                                    dateIn = LocalDate.parse(input, formatter);
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Invalid date format. Please try again.");
+                                }
+                            }
+                            LocalDate dateOut = null;
+                            while (dateOut == null) {
+                                try {
+                                    System.out.println("Enter date out(yyyy-MM-dd): ");
+                                    String input = sc.nextLine();
+                                    dateOut = LocalDate.parse(input, formatter);
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Invalid date format. Please try again.");
+                                }
+                            }
+                            System.out.println("Enter name of illness: ");
+                            String illness = sc.nextLine();
+                            System.out.println("Enter note: ");
+                            String note = sc.nextLine();
+                            MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
+
+                            list.addMedicalChart(id, mc);
+                            // luu vao datat dung mc.get
+                        }
                     } else if (choose2 == 2) {
                         System.out.println("List patient: ");
                         list.showList();
@@ -103,23 +136,24 @@ public class App {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
-                        if(DataProcessing.isPatientExist(id) == true) {}
+                        if (DataProcessing.isPatientExist(id) == true) {
+                        }
                         // xoa benh nhan khoi data
-                            DataProcessing.removeFromDB(id);
-                        } else if (choose2 == 4) {
+                        DataProcessing.removeFromDB(id);
+                    } else if (choose2 == 4) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
-                        if(DataProcessing.isPatientExist(id) == true) {
-                        // neu co thi thay thay doi thong tin benh nhan trong data
-                            
+                        if (DataProcessing.isPatientExist(id) == true) {
+                            // neu co thi thay thay doi thong tin benh nhan trong data
+
                         }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh an cua benh nhan co trong data khong
-                        if(DataProcessing.isPatientExist(id, true) == true) {
-                        // neu co thi thay doi thong tin benh an cua benh nhan trong data
+                        if (DataProcessing.isPatientExist(id, true) == true) {
+                            // neu co thi thay doi thong tin benh an cua benh nhan trong data
 
                         }
                     } else if (choose2 > 5) {
