@@ -20,6 +20,7 @@ public class DataProcessing {
             ResultSet resultSet = statement.executeQuery();
             
             while(resultSet.next()) {
+
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
                 int age = resultSet.getInt(3);
@@ -28,9 +29,38 @@ public class DataProcessing {
                 int yearborn = resultSet.getInt(6);
                 String room = resultSet.getString(7);
 
+
+
                 System.out.println("ID: " + id + "     " + "Name: " + name + "     " + "Age: " + age + "     " + "Birthday: " + dayborn + "/" + monthborn + "/" + yearborn + "     " + "Room: " + room);
                 System.out.println("----------------------------------------------------------------------------------------------------");
             }
+
+            // dong ket noi
+            connection.close();
+
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase2", user, password);
+            String sql2 = "SELECT * FROM medicalchart";
+            PreparedStatement stmt = conn.prepareStatement(sql2);
+            ResultSet res = stmt.executeQuery();
+
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            while(res.next()) {
+
+                int id = res.getInt(1);
+                int dayin = res.getInt(2);
+                int monthin = res.getInt(3);
+                int yearin = res.getInt(4);
+                int dayout = res.getInt(5);
+                int monthout = res.getInt(6);
+                int yearout = res.getInt(7);
+                String illness = res.getString(8);
+                String note = res.getString(9);
+
+                System.out.println("ID: " + id + "      " + "Date in: " + dayin + "/" + monthin + "/" + yearin + "     " + "Date out: " + dayout + "/" + monthout + "/" + yearout + "     " + "Illness: " + illness + "     " + "Note: " + note);
+                System.out.println("----------------------------------------------------------------------------------------------------");
+            }
+
+            conn.close();
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +96,7 @@ public class DataProcessing {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                System.out.println("ID is already exist in the database");
+                System.out.println("ID is already exist in the patient database");
                 return true;
             }
             return false;
@@ -88,7 +118,7 @@ public class DataProcessing {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                System.out.println("ID đã tồn tại trong cơ sở dữ liệu");
+                System.out.println("ID is already exist in the medical chart database");
                 return true;
             }
 

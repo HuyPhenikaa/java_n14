@@ -149,6 +149,10 @@ public class App {
                         if (DataProcessing.isPatientExist(id) == true) {
                             // xoa benh nhan khoi data
                             DataProcessing.removeFromDB(id);
+                            if(DataProcessing.isPatientExist(id, true)) {
+                                DataProcessing.removeFromDB(id, true);
+                            }
+                            System.out.println("ID is removed from database");
                         }
                     } else if (choose2 == 4) {
                         System.out.println("Enter patient ID: ");
