@@ -1,13 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.sql.*;
 
 public class App {
     public static void main(String[] args) {
@@ -63,7 +57,6 @@ public class App {
                 Patient pa = new Patient(name, birthDate, id, nameOfRoom[choose2 - 1]);
 
                 list.addPatient(pa);
-                // up du lieu vao data
                 DataProcessing.addToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(),
                         pa.getYearOfBirth(), pa.getTreatmentRoom());
             } else if (choose == 2) {
@@ -110,7 +103,6 @@ public class App {
                             MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
 
                             list.addMedicalChart(id, mc);
-                            // luu vao datat dung mc.get
                             DataProcessing.addtoDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(),
                                     mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(),
                                     mc.getNote());
@@ -149,7 +141,7 @@ public class App {
                         if (DataProcessing.isPatientExist(id) == true) {
                             // xoa benh nhan khoi data
                             DataProcessing.removeFromDB(id);
-                            if(DataProcessing.isPatientExist(id, true)) {
+                            if (DataProcessing.isPatientExist(id, true)) {
                                 DataProcessing.removeFromDB(id, true);
                             }
                             System.out.println("ID is removed from database");
@@ -159,7 +151,6 @@ public class App {
                         int id = sc.nextInt();
                         String newName;
                         LocalDate newBirthOfDate = null;
-                        int newID;
                         int choose3;
                         // check xem benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id) == true) {
@@ -175,21 +166,22 @@ public class App {
                                     System.out.println("Invalid date format. Please try again.");
                                 }
                             }
-                            
+
                             System.out.println("Enter treatment room: ");
                             for (int i = 0; i < 5; i++) {
                                 System.out.println((i + 1) + "." + nameOfRoom[i]);
                             }
                             choose3 = sc.nextInt();
                             Patient pa = new Patient(newName, newBirthOfDate, id, nameOfRoom[choose3 - 1]);
-                            DataProcessing.changeInformationToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(), pa.getTreatmentRoom());
+                            DataProcessing.changeInformationToDB(pa.getID(), pa.getName(), pa.getAge(),
+                                    pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(),
+                                    pa.getTreatmentRoom());
                         } else {
                             System.out.println("Patient do not exist");
                         }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
-                        // check xem benh an cua benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id, true) == true) {
                             LocalDate newDateIn = null;
                             LocalDate newDateOut = null;
@@ -219,7 +211,9 @@ public class App {
                             System.out.println("Enter note: ");
                             newNote = sc.nextLine();
                             MedicalChart mc = new MedicalChart(newDateIn, newDateOut, newIllness, newNote);
-                            DataProcessing.changeInformationToDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(), mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(), mc.getNote());
+                            DataProcessing.changeInformationToDB(id, mc.getDayOfIn(), mc.getMonthOfIn(),
+                                    mc.getYearOfIn(), mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(),
+                                    mc.getIllness(), mc.getNote());
                         }
                     } else if (choose2 > 5) {
                         System.out.println("Invalid. Please try again");

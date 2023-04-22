@@ -1,7 +1,5 @@
 import java.util.Scanner;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class MedicalChart {
     private LocalDate dateIn;
@@ -78,16 +76,5 @@ public class MedicalChart {
 
     public int getYearOfOut() {
         return this.dateOut.getYear();
-    }
-
-    public String toString() {
-        if (this.check == 1) {
-            return "Illness: " + illness + "\n" +
-                    "DateIn: " + dateIn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
-                    "DateOut: " + dateOut.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
-                    "Note: " + note;
-        } else {
-            return "Not found";
-        }
     }
 }

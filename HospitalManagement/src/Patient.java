@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Patient extends Person {
     private String treatmentRoom;
@@ -62,21 +61,5 @@ public class Patient extends Person {
 
     public String getNote() {
         return this.mc.getNote();
-    }
-
-    public String toString() {
-        return "Name: " + this.name + "\n" +
-                "Age: " + this.age + "\n" +
-                "Date of brith: " + born.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
-                "Id: " + this.id + "\n" +
-                "Treatmentroom: " + this.treatmentRoom + "\n" +
-                "Medical Chart: \n" + mc.toString();
-    }
-
-    public void changePatientMedicalChart(LocalDate dateIn, LocalDate dateOut, String illness, String note) {
-        this.mc.setDateIn(dateIn);
-        this.mc.setDateOut(dateOut);
-        this.mc.setIllness(illness);
-        this.mc.setNote(note);
     }
 }
