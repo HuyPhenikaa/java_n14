@@ -107,7 +107,7 @@ public class App {
                                     mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(),
                                     mc.getNote());
                         } else {
-                            System.out.println("The patient do not exist");
+                            System.out.println("The patient does not exist");
                         }
                     } else if (choose2 == 2) {
                         System.out.println("List patient: ");
@@ -117,6 +117,7 @@ public class App {
                     }
                 } while (choose2 != 0);
             } else if (choose == 3) {
+
                 int choose2;
                 do {
                     System.out.println(
@@ -177,7 +178,7 @@ public class App {
                                     pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(),
                                     pa.getTreatmentRoom());
                         } else {
-                            System.out.println("Patient do not exist");
+                            System.out.println("Patient does not exist");
                         }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");

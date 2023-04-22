@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 public class PatientList {
     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
     Scanner sc = new Scanner(System.in);
-    protected ArrayList<Patient> patientList;
+    private ArrayList<Patient> patientList;
 
     public PatientList() {
         patientList = new ArrayList<Patient>();

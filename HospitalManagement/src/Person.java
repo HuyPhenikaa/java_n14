@@ -63,11 +63,4 @@ public class Person {
     public int getYearOfBirth() {
         return this.born.getYear();
     }
-
-    public void changeInformation(String name, LocalDate born, int id) {
-        setName(name);
-        setBorn(born);
-        setID(id);
-        setAge();
-    }
 }
