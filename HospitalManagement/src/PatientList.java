@@ -23,9 +23,9 @@ public class PatientList {
     }
 
     // remove a patient from the list and database
-    public boolean removePatient(String name, int id) {
+    public boolean removePatient(int id) {
         for (Patient patient : patientList) {
-            if (patient.check(name, id) == true) {
+            if (patient.getID() == id) {
                 return this.patientList.remove(patient);
             } else {
                 return false;
@@ -64,9 +64,9 @@ public class PatientList {
     }
 
     // change patient information
-    public void changeInformation(String name, int id) {
+    public void changeInformation(int id) {
         for (Patient patient : patientList) {
-            if (patient.check(name, id) == true) {
+            if (patient.getID() == id) {
                 System.out.println("Enter new ID: ");
                 int newID = sc.nextInt();
                 System.out.println("Enter new name: ");
@@ -123,38 +123,22 @@ public class PatientList {
     }
 
     // add medical chart
-    public void addMedicalChart(int id) {
+    public void addMedicalChart(int id, MedicalChart mc) {
         for (Patient patient : patientList) {
             if (patient.getID() == id) {
-                LocalDate dateIn = null;
-                while (dateIn == null) {
-                    try {
-                        System.out.println("Enter date in(yyyy-MM-dd): ");
-                        String input = sc.nextLine();
-                        dateIn = LocalDate.parse(input, formatter);
-                    } catch (DateTimeParseException e) {
-                        System.out.println("Invalid date format. Please try again.");
-                    }
-                }
-                LocalDate dateOut = null;
-                while (dateOut == null) {
-                    try {
-                        System.out.println("Enter date out(yyyy-MM-dd): ");
-                        String input = sc.nextLine();
-                        dateOut = LocalDate.parse(input, formatter);
-                    } catch (DateTimeParseException e) {
-                        System.out.println("Invalid date format. Please try again.");
-                    }
-                }
-                System.out.println("Enter name of illness: ");
-                String illness = sc.nextLine();
-                System.out.println("Enter note: ");
-                String note = sc.nextLine();
-                MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
                 patient.setMedicalChart(mc);
-            } else {
-                System.out.println("The patient do not exist");
             }
         }
+    }
+
+    public boolean check(int id) {
+        for (Patient patient : patientList) {
+            if (patient.getID() == id) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 }
