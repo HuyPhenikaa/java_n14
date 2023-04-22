@@ -15,8 +15,9 @@ public class DataProcessing {
         try {
             while (rs.next()) {
                 int id = rs.getInt(1);
-                // String name = rs.getString(2);
-                System.out.println(id);
+                String name = rs.getString(2);
+                System.out.println("ID: " + id + "     " + "Name: " + name);
+                System.out.println("--------------------");
             }
         } catch (Exception e) {
             System.out.println("Loi showinfo");
@@ -34,7 +35,7 @@ public class DataProcessing {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                System.out.println("ID đã tồn tại trong cơ sở dữ liệu");
+                System.out.println("ID is already exist in the database");
                 return false;
             }
             return true;
@@ -200,12 +201,15 @@ public class DataProcessing {
         var password = "";
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement statement = null;
-            String sql = "SELECT id FROM patient_data WHERE age = ?";
+            String sql = "SELECT id, name FROM patient_data WHERE age = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, age);
 
             ResultSet rs = statement.executeQuery();
             showInfo(rs);
+            // while(rs.next()) {
+            //     System.out.println(rs.getInt(1) + " " + rs.getString(2));
+            // }
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -263,8 +267,8 @@ public class DataProcessing {
         // changeInformationToDB(7, "da changed", 18, 17, 5, 2004, 1);
         // filterAge(18);
         // filterRoom(0);
-        addtoDB(2, " Huy", 1, 3, 2017, 13, 12, 2018, "dau bung", "Khong co gi");
+        // addtoDB(2, " Huy", 1, 3, 2017, 13, 12, 2018, "dau bung", "Khong co gi");
         // removeFromDB(1, false);
-        changeInformationToDB(1, "Huy Quang", 4, 9, 9, 9, 9, 9, "good", "nothing");
+        // changeInformationToDB(1, "Huy Quang", 4, 9, 9, 9, 9, 9, "good", "nothing");
     }
 }

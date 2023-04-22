@@ -18,7 +18,7 @@ public class App {
         String[] nameOfRoom = new String[5];
 
         for (int i = 0; i < 5; i++) {
-            nameOfRoom[i] = "room" + Integer.toString(i + 1);
+            nameOfRoom[i] = "room " + Integer.toString(i + 1);
         }
 
         int choose;
@@ -87,7 +87,7 @@ public class App {
                             "0. Out\n" +
                                     "1. Show list of patient\n" +
                                     "2. Show list of patient with age\n" +
-                                    "3. remove Patient\n" +
+                                    "3. Remove Patient\n" +
                                     "4. Change patient information\n" +
                                     "5. Change medical chart information");
                     choose2 = sc.nextInt();
@@ -98,22 +98,30 @@ public class App {
                         System.out.println("Enter age: ");
                         int age = sc.nextInt();
                         // in danh sach benh nhan theo do tuoi tu data
+                        DataProcessing.filterAge(age);
                     } else if (choose2 == 3) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
-
+                        if(DataProcessing.isPatientExist(id) == true) {}
                         // xoa benh nhan khoi data
-                    } else if (choose2 == 4) {
+                            DataProcessing.removeFromDB(id);
+                        } else if (choose2 == 4) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
+                        if(DataProcessing.isPatientExist(id) == true) {
                         // neu co thi thay thay doi thong tin benh nhan trong data
+                            
+                        }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
-                        // check xem benh nhan co trong data khong
+                        // check xem benh an cua benh nhan co trong data khong
+                        if(DataProcessing.isPatientExist(id, true) == true) {
                         // neu co thi thay doi thong tin benh an cua benh nhan trong data
+
+                        }
                     } else if (choose2 > 5) {
                         System.out.println("Invalid. Please try again");
                     }
