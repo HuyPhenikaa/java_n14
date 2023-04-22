@@ -290,30 +290,30 @@ public class DataProcessing {
         }
     }
 
-    public static void updateDB(TreatmentRoom tmr[]) {
-        int i = 0;
-        int n = 0;
-        for (TreatmentRoom treatmentRoom : tmr) {
-            n = n + treatmentRoom.getNumberOfPatient();
-        }
-        String[] name = new String[n];
-        int[] id = new int[n];
-        int[] age = new int[n];
-        int[] dayOfBirth = new int[n];
-        int[] monthOfBirth = new int[n];
-        int[] yearOfBirth = new int[n];
-        String[] nameOfTreatmentroom = new String[n];
-        String[] nameOfIllness = new String[n];
-        String[] note = new String[n];
-        int[] dayOfIn = new int[n];
-        int[] monthOfIn = new int[n];
-        int[] yearOfIn = new int[n];
-        int[] dayOfOut = new int[n];
-        int[] monthOfOut = new int[n];
-        int[] yearOfOut = new int[n];
-        for (TreatmentRoom treatmentRoom : tmr) {
-            treatmentRoom.getInformation(name, id, age, dayOfBirth, monthOfBirth, yearOfBirth, nameOfTreatmentroom,
-                    nameOfIllness, note, dayOfIn, monthOfIn, yearOfIn, dayOfOut, monthOfOut, yearOfOut, i);
-        }
-    }
+    // public static void updateDB(TreatmentRoom tmr[]) {
+    //     int i = 0;
+    //     int n = 0;
+    //     for (TreatmentRoom treatmentRoom : tmr) {
+    //         n = n + treatmentRoom.getNumberOfPatient();
+    //     }
+    //     String[] name = new String[n];
+    //     int[] id = new int[n];
+    //     int[] age = new int[n];
+    //     int[] dayOfBirth = new int[n];
+    //     int[] monthOfBirth = new int[n];
+    //     int[] yearOfBirth = new int[n];
+    //     String[] nameOfTreatmentroom = new String[n];
+    //     String[] nameOfIllness = new String[n];
+    //     String[] note = new String[n];
+    //     int[] dayOfIn = new int[n];
+    //     int[] monthOfIn = new int[n];
+    //     int[] yearOfIn = new int[n];
+    //     int[] dayOfOut = new int[n];
+    //     int[] monthOfOut = new int[n];
+    //     int[] yearOfOut = new int[n];
+    //     for (TreatmentRoom treatmentRoom : tmr) {
+    //         treatmentRoom.getInformation(name, id, age, dayOfBirth, monthOfBirth, yearOfBirth, nameOfTreatmentroom,
+    //                 nameOfIllness, note, dayOfIn, monthOfIn, yearOfIn, dayOfOut, monthOfOut, yearOfOut, i);
+    //     }
+    // }
 }
