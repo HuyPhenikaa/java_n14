@@ -10,11 +10,15 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class DataProcessing {
+
     public static void showInfo() {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
+        
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             String sql = "SELECT * FROM patient_data";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -66,10 +70,13 @@ public class DataProcessing {
             e.printStackTrace();
         }
     }
+
     // in theo filter
     public static void showInfo(ResultSet resultSet) {
+
         try {
             while (resultSet.next()) {
+
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
                 int age = resultSet.getInt(3);
@@ -77,9 +84,11 @@ public class DataProcessing {
                 int monthborn = resultSet.getInt(5);
                 int yearborn = resultSet.getInt(6);
                 String room = resultSet.getString(7);
+
                 System.out.println("ID: " + id + "     " + "Name: " + name + "     " + "Age: " + age + "     " + "Birthday: " + dayborn + "/" + monthborn + "/" + yearborn + "     " + "Room: " + room);
                 System.out.println("----------------------------------------------------------------------------------------------------");
             }
+
         } catch (Exception e) {
             System.out.println("Loi showinfo");
         }
@@ -87,14 +96,18 @@ public class DataProcessing {
 
     // kiem tra xem id co ton tai chua
     public static boolean isPatientExist(int id) {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             String sql = "SELECT id FROM patient_data WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
                 System.out.println("ID is already exist in the patient database");
                 return true;
@@ -109,14 +122,18 @@ public class DataProcessing {
     }
 
     public static boolean isPatientExist(int id, boolean medical) {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase2";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             String sql = "SELECT id FROM medicalchart WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
                 System.out.println("ID is already exist in the medical chart database");
                 return true;
@@ -124,16 +141,20 @@ public class DataProcessing {
 
         } catch (Exception e) {
             System.out.println("Loi ket noi");
+            e.printStackTrace();
         }
         return false;
     }
 
     // them benh nhan
     public static void addToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn, String room) {
+
             var url = "jdbc:mysql://localhost:3306/mydatabase";
             var user = "root";
             var password = "";
+
             try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
                 String sql1 = "INSERT INTO patient_data(id, name, age, dayborn, monthborn, yearborn, room) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement statement = connection.prepareStatement(sql1);
@@ -150,7 +171,7 @@ public class DataProcessing {
                 connection.close();
 
             } catch (Exception e) {
-                // e.printStackTrace();
+                e.printStackTrace();
             }
     }
 
@@ -184,10 +205,13 @@ public class DataProcessing {
 
     // xoa benh nhan theo id
     public static void removeFromDB(int idToDelete) {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             PreparedStatement statement = null;
             String sql = "DELETE FROM patient_data WHERE id = ?";
             statement = connection.prepareStatement(sql);
@@ -198,16 +222,21 @@ public class DataProcessing {
             statement.executeBatch();
 
             connection.close();
+
         } catch (Exception e) {
             System.out.println("Loi xoa");
+            e.printStackTrace();
         }
     }
 
     public static void removeFromDB(int idToDelete, boolean medical) {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase2";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             PreparedStatement statement = null;
             String sql = "DELETE FROM medicalchart WHERE id = ?";
             statement = connection.prepareStatement(sql);
@@ -218,44 +247,55 @@ public class DataProcessing {
             statement.executeBatch();
 
             connection.close();
+
         } catch (Exception e) {
             System.out.println("Loi xoa");
+            e.printStackTrace();
         }
     }
 
-    public static void changeInformationToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn,
-            String room) {
+    public static void changeInformationToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn, String room) {
+        
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             removeFromDB(id);
             addToDB(id, name, age, dayborn, monthborn, yearborn, room);
             connection.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void changeInformationToDB(int id, int dayIn, int monIN, int yeIN, int dayOut,
-            int monOut, int yeOut, String illness, String note) {
+    public static void changeInformationToDB(int id, int dayIn, int monIN, int yeIN, int dayOut, int monOut, int yeOut, String illness, String note) {
+        
         var url = "jdbc:mysql://localhost:3306/mydatabase2";
         var user = "root";
         var password = "";
+        
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             removeFromDB(id, true);
             addtoDB(id, dayIn, monIN, yeIN, dayOut, monOut, yeOut, illness, note);
             connection.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void filterAge(int age) {
+
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
+
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
             PreparedStatement statement = null;
             String sql = "SELECT id, name, age, dayborn, monthborn, yearborn, room FROM patient_data WHERE age = ?";
             statement = connection.prepareStatement(sql);
@@ -267,28 +307,32 @@ public class DataProcessing {
             //     System.out.println(rs.getInt(1) + " " + rs.getString(2));
             // }
             connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void filterRoom(int room) {
-        var url = "jdbc:mysql://localhost:3306/mydatabase";
-        var user = "root";
-        var password = "";
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            PreparedStatement statement = null;
-            String sql = "SELECT id FROM patient_data WHERE room = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, room);
+    // public static void filterRoom(int room) {
 
-            ResultSet rs = statement.executeQuery();
-            showInfo(rs);
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    //     var url = "jdbc:mysql://localhost:3306/mydatabase";
+    //     var user = "root";
+    //     var password = "";
+
+    //     try (Connection connection = DriverManager.getConnection(url, user, password)) {
+    //         PreparedStatement statement = null;
+    //         String sql = "SELECT id FROM patient_data WHERE room = ?";
+    //         statement = connection.prepareStatement(sql);
+    //         statement.setInt(1, room);
+
+    //         ResultSet rs = statement.executeQuery();
+    //         showInfo(rs);
+    //         connection.close();
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     // public static void updateDB(TreatmentRoom tmr[]) {
     //     int i = 0;
