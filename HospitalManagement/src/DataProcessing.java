@@ -10,14 +10,45 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class DataProcessing {
-    // in
-    public static void showInfo(ResultSet rs) {
+    public static void showInfo() {
+        var url = "jdbc:mysql://localhost:3306/mydatabase";
+        var user = "root";
+        var password = "";
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String sql = "SELECT * FROM patient_data";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            
+            while(resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                int age = resultSet.getInt(3);
+                int dayborn = resultSet.getInt(4);
+                int monthborn = resultSet.getInt(5);
+                int yearborn = resultSet.getInt(6);
+                String room = resultSet.getString(7);
+
+                System.out.println("ID: " + id + "     " + "Name: " + name + "     " + "Age: " + age + "     " + "Birthday: " + dayborn + "/" + monthborn + "/" + yearborn + "     " + "Room: " + room);
+                System.out.println("----------------------------------------------------------------------------------------------------");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // in theo filter
+    public static void showInfo(ResultSet resultSet) {
         try {
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String name = rs.getString(2);
-                System.out.println("ID: " + id + "     " + "Name: " + name);
-                System.out.println("--------------------");
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                int age = resultSet.getInt(3);
+                int dayborn = resultSet.getInt(4);
+                int monthborn = resultSet.getInt(5);
+                int yearborn = resultSet.getInt(6);
+                String room = resultSet.getString(7);
+                System.out.println("ID: " + id + "     " + "Name: " + name + "     " + "Age: " + age + "     " + "Birthday: " + dayborn + "/" + monthborn + "/" + yearborn + "     " + "Room: " + room);
+                System.out.println("----------------------------------------------------------------------------------------------------");
             }
         } catch (Exception e) {
             System.out.println("Loi showinfo");
@@ -36,12 +67,13 @@ public class DataProcessing {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 System.out.println("ID is already exist in the database");
-                return false;
+                return true;
             }
-            return true;
+            return false;
 
         } catch (Exception e) {
             System.out.println("Loi ket noi");
+            e.printStackTrace();
         }
         return false;
     }
@@ -57,9 +89,8 @@ public class DataProcessing {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 System.out.println("ID đã tồn tại trong cơ sở dữ liệu");
-                return false;
+                return true;
             }
-            return true;
 
         } catch (Exception e) {
             System.out.println("Loi ket noi");
@@ -68,8 +99,7 @@ public class DataProcessing {
     }
 
     // them benh nhan
-    public static void addToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn, int room) {
-        if (!isPatientExist(id)) {
+    public static void addToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn, String room) {
             var url = "jdbc:mysql://localhost:3306/mydatabase";
             var user = "root";
             var password = "";
@@ -83,38 +113,35 @@ public class DataProcessing {
                 statement.setInt(4, dayborn);
                 statement.setInt(5, monthborn);
                 statement.setInt(6, yearborn);
-                statement.setInt(7, room);
+                statement.setString(7, room);
                 statement.addBatch();
 
                 statement.executeBatch();
                 connection.close();
 
             } catch (Exception e) {
-                e.printStackTrace();
+                // e.printStackTrace();
             }
-        }
     }
 
-    public static void addtoDB(int id, String name, int dayIn, int monIN, int yeIN, int dayOut, int monOut, int yeOut,
+    public static void addtoDB(int id, int dayIn, int monIN, int yeIN, int dayOut, int monOut, int yeOut,
             String illness, String note) {
-        if (isPatientExist(id, true)) { // dang loi neu la true thi moi add
             var url = "jdbc:mysql://localhost:3306/mydatabase2";
             var user = "root";
             var password = "";
             try (Connection connection = DriverManager.getConnection(url, user, password)) {
-                String sql1 = "INSERT INTO medicalchart(id, name, dayin, monthin, yearin, dayout, monthout, yearout, illness, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql1 = "INSERT INTO medicalchart(id, dayin, monthin, yearin, dayout, monthout, yearout, illness, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement statement = connection.prepareStatement(sql1);
                 statement.setInt(1, id);
-                statement.setString(2, name);
-                statement.setInt(3, dayIn);
-                statement.setInt(4, monIN);
-                statement.setInt(5, yeIN);
-                statement.setInt(6, dayOut);
-                statement.setInt(7, monOut);
-                statement.setInt(8, yeOut);
-                statement.setString(9, illness);
-                statement.setString(10, note);
+                statement.setInt(2, dayIn);
+                statement.setInt(3, monIN);
+                statement.setInt(4, yeIN);
+                statement.setInt(5, dayOut);
+                statement.setInt(6, monOut);
+                statement.setInt(7, yeOut);
+                statement.setString(8, illness);
+                statement.setString(9, note);
                 statement.addBatch();
 
                 statement.executeBatch();
@@ -123,7 +150,6 @@ public class DataProcessing {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
     }
 
     // xoa benh nhan theo id
@@ -168,7 +194,7 @@ public class DataProcessing {
     }
 
     public static void changeInformationToDB(int id, String name, int age, int dayborn, int monthborn, int yearborn,
-            int room) {
+            String room) {
         var url = "jdbc:mysql://localhost:3306/mydatabase";
         var user = "root";
         var password = "";
@@ -188,7 +214,7 @@ public class DataProcessing {
         var password = "";
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             removeFromDB(id, true);
-            addtoDB(id, name, dayIn, monIN, yeIN, dayOut, monOut, yeOut, illness, note);
+            addtoDB(id, dayIn, monIN, yeIN, dayOut, monOut, yeOut, illness, note);
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,7 +227,7 @@ public class DataProcessing {
         var password = "";
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement statement = null;
-            String sql = "SELECT id, name FROM patient_data WHERE age = ?";
+            String sql = "SELECT id, name, age, dayborn, monthborn, yearborn, room FROM patient_data WHERE age = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, age);
 
@@ -259,16 +285,5 @@ public class DataProcessing {
             treatmentRoom.getInformation(name, id, age, dayOfBirth, monthOfBirth, yearOfBirth, nameOfTreatmentroom,
                     nameOfIllness, note, dayOfIn, monthOfIn, yearOfIn, dayOfOut, monthOfOut, yearOfOut, i);
         }
-    }
-
-    public static void main(String[] args) {
-        // addToDB(7, "Day la id 6", 18, 13, 12, 2004);
-        // removeFromDB(1);
-        // changeInformationToDB(7, "da changed", 18, 17, 5, 2004, 1);
-        // filterAge(18);
-        // filterRoom(0);
-        // addtoDB(2, " Huy", 1, 3, 2017, 13, 12, 2018, "dau bung", "Khong co gi");
-        // removeFromDB(1, false);
-        // changeInformationToDB(1, "Huy Quang", 4, 9, 9, 9, 9, 9, "good", "nothing");
     }
 }

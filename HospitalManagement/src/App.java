@@ -48,8 +48,11 @@ public class App {
                     }
                 }
 
-                System.out.println("Enter ID: ");
-                int id = sc.nextInt();
+                int id;
+                do {
+                    System.out.println("Enter ID: ");
+                    id = sc.nextInt();
+                } while (DataProcessing.isPatientExist(id) == true);
 
                 System.out.println("Add patient to: ");
                 int choose2;
@@ -61,6 +64,7 @@ public class App {
 
                 list.addPatient(pa);
                 // up du lieu vao data
+                DataProcessing.addToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(), pa.getTreatmentRoom());
             } else if (choose == 2) {
                 int choose2;
                 do {
@@ -79,7 +83,7 @@ public class App {
                         String illness;
                         String note;
                         sc.nextLine();
-                        if (list.check(id) == true) {
+                        if (list.check(id) == true || DataProcessing.isPatientExist(id) == true) {
                             while (dateIn == null) {
                                 try {
                                     System.out.println("Enter date in(yyyy-MM-dd): ");
@@ -106,6 +110,7 @@ public class App {
 
                             list.addMedicalChart(id, mc);
                             // luu vao datat dung mc.get
+                            DataProcessing.addtoDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(), mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(), mc.getNote());
                         } else {
                             System.out.println("The patient do not exist");
                         }
@@ -129,27 +134,26 @@ public class App {
                     choose2 = sc.nextInt();
 
                     if (choose2 == 1) {
-                        // in danh sach benh nhan tu data
+                        DataProcessing.showInfo();
                     } else if (choose2 == 2) {
                         System.out.println("Enter age: ");
                         int age = sc.nextInt();
-                        // in danh sach benh nhan theo do tuoi tu data
                         DataProcessing.filterAge(age);
                     } else if (choose2 == 3) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id) == true) {
-                        }
                         // xoa benh nhan khoi data
                         DataProcessing.removeFromDB(id);
+                        }
                     } else if (choose2 == 4) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id) == true) {
                             // neu co thi thay thay doi thong tin benh nhan trong data
-
+                            
                         }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");
