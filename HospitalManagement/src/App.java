@@ -74,8 +74,11 @@ public class App {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
 
+                        LocalDate dateIn = null;
+                        LocalDate dateOut = null;
+                        String illness;
+                        String note;
                         if (list.check(id) == true) {
-                            LocalDate dateIn = null;
                             while (dateIn == null) {
                                 try {
                                     System.out.println("Enter date in(yyyy-MM-dd): ");
@@ -85,7 +88,6 @@ public class App {
                                     System.out.println("Invalid date format. Please try again.");
                                 }
                             }
-                            LocalDate dateOut = null;
                             while (dateOut == null) {
                                 try {
                                     System.out.println("Enter date out(yyyy-MM-dd): ");
@@ -96,9 +98,9 @@ public class App {
                                 }
                             }
                             System.out.println("Enter name of illness: ");
-                            String illness = sc.nextLine();
+                            illness = sc.nextLine();
                             System.out.println("Enter note: ");
-                            String note = sc.nextLine();
+                            note = sc.nextLine();
                             MedicalChart mc = new MedicalChart(dateIn, dateOut, illness, note);
 
                             list.addMedicalChart(id, mc);
@@ -112,8 +114,6 @@ public class App {
                     }
                 } while (choose2 != 0);
             } else if (choose == 3) {
-                // cap nhat thong tin vao data
-
                 int choose2;
                 do {
                     System.out.println(
