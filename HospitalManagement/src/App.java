@@ -64,7 +64,8 @@ public class App {
 
                 list.addPatient(pa);
                 // up du lieu vao data
-                DataProcessing.addToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(), pa.getTreatmentRoom());
+                DataProcessing.addToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(),
+                        pa.getYearOfBirth(), pa.getTreatmentRoom());
             } else if (choose == 2) {
                 int choose2;
                 do {
@@ -110,7 +111,9 @@ public class App {
 
                             list.addMedicalChart(id, mc);
                             // luu vao datat dung mc.get
-                            DataProcessing.addtoDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(), mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(), mc.getNote());
+                            DataProcessing.addtoDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(),
+                                    mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(),
+                                    mc.getNote());
                         } else {
                             System.out.println("The patient do not exist");
                         }
@@ -144,24 +147,74 @@ public class App {
                         int id = sc.nextInt();
                         // check xem benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id) == true) {
-                        // xoa benh nhan khoi data
-                        DataProcessing.removeFromDB(id);
+                            // xoa benh nhan khoi data
+                            DataProcessing.removeFromDB(id);
                         }
                     } else if (choose2 == 4) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
+                        String newName;
+                        LocalDate newBirthOfDate = null;
+                        int newID;
+                        int choose3;
                         // check xem benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id) == true) {
-                            // neu co thi thay thay doi thong tin benh nhan trong data
-                            
+                            System.out.println("Enter name: ");
+                            sc.nextLine();
+                            newName = sc.nextLine();
+                            while (newBirthOfDate == null) {
+                                try {
+                                    System.out.println("Enter date of birth(yyyy-MM-dd): ");
+                                    String input = sc.nextLine();
+                                    newBirthOfDate = LocalDate.parse(input, formatter);
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Invalid date format. Please try again.");
+                                }
+                            }
+                            System.out.println("Enter ID: ");
+                            newID = sc.nextInt();
+                            System.out.println("Enter treatment room: ");
+                            for (int i = 0; i < 5; i++) {
+                                System.out.println((i + 1) + "." + nameOfRoom[i]);
+                            }
+                            choose3 = sc.nextInt();
+                            Patient pa = new Patient(newName, newBirthOfDate, newID, nameOfRoom[choose3 - 1]);
+                        } else {
+                            System.out.println("Patient do not exist");
                         }
                     } else if (choose2 == 5) {
                         System.out.println("Enter patient ID: ");
                         int id = sc.nextInt();
                         // check xem benh an cua benh nhan co trong data khong
                         if (DataProcessing.isPatientExist(id, true) == true) {
-                            // neu co thi thay doi thong tin benh an cua benh nhan trong data
-
+                            LocalDate newDateIn = null;
+                            LocalDate newDateOut = null;
+                            String newIllness;
+                            String newNote;
+                            sc.nextLine();
+                            while (newDateIn == null) {
+                                try {
+                                    System.out.println("Enter date in(yyyy-MM-dd): ");
+                                    String input = sc.nextLine();
+                                    newDateIn = LocalDate.parse(input, formatter);
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Invalid date format. Please try again.");
+                                }
+                            }
+                            while (newDateOut == null) {
+                                try {
+                                    System.out.println("Enter date out(yyyy-MM-dd): ");
+                                    String input = sc.nextLine();
+                                    newDateOut = LocalDate.parse(input, formatter);
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Invalid date format. Please try again.");
+                                }
+                            }
+                            System.out.println("Enter name of illness: ");
+                            newIllness = sc.nextLine();
+                            System.out.println("Enter note: ");
+                            newNote = sc.nextLine();
+                            MedicalChart mc = new MedicalChart(newDateIn, newDateOut, newIllness, newNote);
                         }
                     } else if (choose2 > 5) {
                         System.out.println("Invalid. Please try again");
