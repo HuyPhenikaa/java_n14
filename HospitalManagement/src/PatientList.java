@@ -88,9 +88,9 @@ public class PatientList {
     }
 
     // change medical chart
-    public void changeMedicalChart(String name, int id) {
+    public void changeMedicalChart(int id) {
         for (Patient patient : patientList) {
-            if (patient.check(name, id) == true) {
+            if (patient.getID() == id) {
                 LocalDate dateIn = null;
                 while (dateIn == null) {
                     try {
@@ -123,9 +123,9 @@ public class PatientList {
     }
 
     // add medical chart
-    public void addMedicalChart(String name, int id) {
+    public void addMedicalChart(int id) {
         for (Patient patient : patientList) {
-            if (patient.check(name, id) == true) {
+            if (patient.getID() == id) {
                 LocalDate dateIn = null;
                 while (dateIn == null) {
                     try {

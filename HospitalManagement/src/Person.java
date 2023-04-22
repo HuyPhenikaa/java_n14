@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.Period;
 
 public class Person {

@@ -79,12 +79,4 @@ public class Patient extends Person {
         this.mc.setIllness(illness);
         this.mc.setNote(note);
     }
-
-    public boolean check(String name, int id) {
-        if (this.name.equals(name) == true && this.id == id) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
