@@ -207,7 +207,7 @@ public class DataProcessing {
         }
     }
 
-    public static void changeInformationToDB(int id, String name, int dayIn, int monIN, int yeIN, int dayOut,
+    public static void changeInformationToDB(int id, int dayIn, int monIN, int yeIN, int dayOut,
             int monOut, int yeOut, String illness, String note) {
         var url = "jdbc:mysql://localhost:3306/mydatabase2";
         var user = "root";

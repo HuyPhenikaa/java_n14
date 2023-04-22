@@ -171,14 +171,14 @@ public class App {
                                     System.out.println("Invalid date format. Please try again.");
                                 }
                             }
-                            System.out.println("Enter ID: ");
-                            newID = sc.nextInt();
+                            
                             System.out.println("Enter treatment room: ");
                             for (int i = 0; i < 5; i++) {
                                 System.out.println((i + 1) + "." + nameOfRoom[i]);
                             }
                             choose3 = sc.nextInt();
-                            Patient pa = new Patient(newName, newBirthOfDate, newID, nameOfRoom[choose3 - 1]);
+                            Patient pa = new Patient(newName, newBirthOfDate, id, nameOfRoom[choose3 - 1]);
+                            DataProcessing.changeInformationToDB(pa.getID(), pa.getName(), pa.getAge(), pa.getDayOfBirth(), pa.getMonthOfBirth(), pa.getYearOfBirth(), pa.getTreatmentRoom());
                         } else {
                             System.out.println("Patient do not exist");
                         }
@@ -215,6 +215,7 @@ public class App {
                             System.out.println("Enter note: ");
                             newNote = sc.nextLine();
                             MedicalChart mc = new MedicalChart(newDateIn, newDateOut, newIllness, newNote);
+                            DataProcessing.changeInformationToDB(id, mc.getDayOfIn(), mc.getMonthOfIn(), mc.getYearOfIn(), mc.getDayOfOut(), mc.getMonthOfOut(), mc.getYearOfOut(), mc.getIllness(), mc.getNote());
                         }
                     } else if (choose2 > 5) {
                         System.out.println("Invalid. Please try again");
